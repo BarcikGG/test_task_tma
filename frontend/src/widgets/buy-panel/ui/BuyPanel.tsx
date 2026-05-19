@@ -111,7 +111,7 @@ export function BuyPanel({ className }: BuyPanelProps) {
         </button>
 
         <div className="text-center">
-          <span className="buy-panel-amount !text-white text-4xl font-bold tracking-tight">
+          <span className="buy-panel-amount text-white text-4xl font-bold tracking-tight">
             {formatEuropean(displayAmount)}
           </span>
         </div>
@@ -154,7 +154,7 @@ export function BuyPanel({ className }: BuyPanelProps) {
             onChange={handleCurrencyChange}
             className={cn(
               'h-14 inner-dark-panel border border-white/[0.08] rounded-2xl px-4 pr-8',
-              '!text-white text-sm font-medium appearance-none cursor-pointer',
+              'text-white text-sm font-medium appearance-none cursor-pointer',
               'focus:outline-none focus:border-blue transition-colors',
               'min-w-[100px] font-mono',
             )}
@@ -177,7 +177,7 @@ export function BuyPanel({ className }: BuyPanelProps) {
           onBlur={handleAmountBlur}
           className={cn(
             'flex-1 h-14 inner-dark-panel border border-white/[0.08] rounded-2xl px-4',
-            '!text-white text-md font-medium text-left',
+            'text-white text-md font-medium text-left',
             'focus:outline-none focus:border-blue transition-colors font-mono',
           )}
           inputMode="decimal"
