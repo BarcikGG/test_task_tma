@@ -56,7 +56,7 @@ function PodiumItem({ item, rank }: PodiumItemProps) {
 }
 
 export function TopUsers({ items, className }: TopUsersProps) {
-  const topItems = items.slice(0, 10)
+  const topItems = items
 
   return (
     <div className={cn('flex flex-col gap-2', className)}>

@@ -2,7 +2,7 @@
 
 import { type ReactNode, useLayoutEffect } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { userLoaded, userPointsUpdated } from '@/entities/user'
+import { userLoaded, userPointsUpdated, userRankUpdated } from '@/entities/user'
 import type { TMAUser } from '@/entities/user'
 import { fetchUser } from '@/entities/user/api/userApi'
 
@@ -67,6 +67,7 @@ function TMAProvider({ children }: { children: ReactNode }) {
             try {
               const backendUser = await fetchUser(String(raw.id))
               userPointsUpdated(backendUser.points)
+              if (backendUser.rank != null) userRankUpdated(backendUser.rank)
               if (backendUser.photoUrl) {
                 userLoaded({ ...user, photoUrl: backendUser.photoUrl })
               }
