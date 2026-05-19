@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 const RawTransactionSchema = z.object({
   id: z.string(),
+  userId: z.string(),
   amount: z.coerce.number(),
   currency: z.string(),
   createdAt: z.string(),
@@ -15,6 +16,7 @@ const RawTransactionSchema = z.object({
 
 export const TransactionSchema = RawTransactionSchema.transform((raw) => ({
   id: raw.id,
+  userId: raw.userId,
   username: raw.user.username ?? raw.user.firstName,
   avatar: raw.user.photoUrl ?? undefined,
   amount: raw.amount,

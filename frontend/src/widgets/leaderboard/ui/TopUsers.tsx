@@ -44,7 +44,7 @@ function PodiumItem({ item, rank }: PodiumItemProps) {
         className={cn(
           'w-full mt-2 rounded-t-2xl flex items-center justify-center',
           BAR_HEIGHT[rank],
-          isFirst ? 'bg-blue/20 border border-blue/30' : 'bg-card border border-white/[0.08]',
+          isFirst ? 'bg-[rgba(29,155,240,0.2)] border border-[rgba(29,155,240,0.3)]' : 'bg-card border border-white/[0.08]',
         )}
       >
         <span className={cn('font-bold text-white', RANK_SIZE[rank])}>

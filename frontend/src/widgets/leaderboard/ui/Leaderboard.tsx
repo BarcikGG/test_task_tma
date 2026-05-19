@@ -31,6 +31,15 @@ export function Leaderboard({ className }: LeaderboardProps) {
 
   const transactions = data?.pages.flatMap((p) => p.items) ?? []
 
+  const uniqueByUser = (items: typeof transactions) => {
+    const seen = new Set<string>()
+    return items.filter((t) => {
+      if (seen.has(t.userId)) return false
+      seen.add(t.userId)
+      return true
+    })
+  }
+
   useEffect(() => {
     const sentinel = sentinelRef.current
     if (!sentinel) return
@@ -60,9 +69,9 @@ export function Leaderboard({ className }: LeaderboardProps) {
 
       <div className="border border-[rgba(116,116,128,0.15)] rounded-[14px] overflow-hidden">
         <div key={activeTab} className="animate-fade-in">
-          {activeTab === 'holders' && <HoldersList items={transactions} />}
+          {activeTab === 'holders' && <HoldersList items={uniqueByUser(transactions)} />}
           {activeTab === 'transfers' && <TransactionList items={transactions} />}
-          {activeTab === 'top' && <TopUsers items={transactions} />}
+          {activeTab === 'top' && <TopUsers items={uniqueByUser(transactions)} />}
         </div>
       </div>
 
