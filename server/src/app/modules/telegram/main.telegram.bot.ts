@@ -2,13 +2,13 @@ import { Bot, InlineKeyboard, webhookCallback, type Context } from 'grammy';
 import { BOT_COMMANDS } from './bot.commands';
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { UsersService } from '../user/users.service';
-import { Request, Response } from 'express';
+import type { Request as ExpressRequest, Response as ExpressResponse } from 'express';
 
 @Injectable()
 export class TelegramBot implements OnModuleInit {
   private readonly logger = new Logger(TelegramBot.name);
   private bot: Bot;
-  private handleUpdateFn: (req: Request, res: Response) => Promise<void>;
+  private handleUpdateFn: (req: ExpressRequest, res: ExpressResponse) => Promise<void>;
 
   private readonly appUrl: string;
   private readonly token: string;
@@ -29,11 +29,10 @@ export class TelegramBot implements OnModuleInit {
     let customFetch: typeof fetch | undefined;
 
     if (this.proxyUrl) {
-      const { HttpsProxyAgent } = await import('https-proxy-agent');
-      const nodeFetch = (await import('node-fetch')).default;
-      const agent = new HttpsProxyAgent(this.proxyUrl);
-      customFetch = (url: string | URL | Request, opts?: RequestInit) =>
-        nodeFetch(url as string, { ...(opts as any), agent }) as unknown as Promise<Response>;
+      const { ProxyAgent, fetch: undiciFetch } = await import('undici');
+      const dispatcher = new ProxyAgent(this.proxyUrl);
+      customFetch = ((url: any, opts?: any) =>
+        undiciFetch(url, { ...opts, dispatcher })) as unknown as typeof fetch;
     }
 
     this.bot = new Bot(this.token, {
@@ -41,9 +40,9 @@ export class TelegramBot implements OnModuleInit {
     });
 
     this.userHandler();
-    this.handleUpdateFn = webhookCallback(this.bot, 'express');
 
     if (this.webhookDomain) {
+      this.handleUpdateFn = webhookCallback(this.bot, 'express');
       try {
         const url = `${this.webhookDomain}/api/telegram/webhook`;
         await this.bot.api.setWebhook(url);
@@ -56,7 +55,7 @@ export class TelegramBot implements OnModuleInit {
     }
   }
 
-  async handleUpdate(req: Request, res: Response) {
+  async handleUpdate(req: ExpressRequest, res: ExpressResponse) {
     await this.handleUpdateFn(req, res);
   }
 
