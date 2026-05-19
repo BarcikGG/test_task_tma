@@ -1,0 +1,1 @@
+export { AnimatedDescription } from './ui/AnimatedDescription';
