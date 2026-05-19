@@ -41,7 +41,7 @@ export function Leaderboard({ className }: LeaderboardProps) {
           fetchNextPage()
         }
       },
-      { threshold: 0.1 },
+      { rootMargin: '300px' },
     )
 
     observer.observe(sentinel)
@@ -68,17 +68,30 @@ export function Leaderboard({ className }: LeaderboardProps) {
 
       <div ref={sentinelRef} className="h-px" aria-hidden="true" />
 
-      {isFetchingNextPage && (
-        <div className="flex justify-center py-3">
-          <span className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-        </div>
-      )}
+      {isFetchingNextPage && <SkeletonRows />}
     </div>
   )
 }
 
 interface HoldersListProps {
   items: Transaction[]
+}
+
+function SkeletonRows() {
+  return (
+    <div className="flex flex-col gap-1 px-1 py-1">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <div key={i} className="flex items-center gap-3 py-3 px-3">
+          <div className="w-10 h-10 rounded-full bg-white/10 animate-pulse flex-shrink-0" />
+          <div className="flex flex-col gap-1.5 flex-1">
+            <div className="h-3 w-24 rounded bg-white/10 animate-pulse" />
+            <div className="h-2.5 w-16 rounded bg-white/[0.06] animate-pulse" />
+          </div>
+          <div className="h-3 w-10 rounded bg-white/10 animate-pulse" />
+        </div>
+      ))}
+    </div>
+  )
 }
 
 function HoldersList({ items }: HoldersListProps) {
