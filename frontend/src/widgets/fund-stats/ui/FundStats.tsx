@@ -39,7 +39,7 @@ export function FundStats({ className }: FundStatsProps) {
           {roundName} goal {formatTON(goal, currency)}
         </p>
 
-        <div className="flex flex-col gap-0 bg-[#1C2935] rounded-2xl overflow-hidden">
+        <div className="inner-dark-card flex flex-col gap-0 rounded-2xl overflow-hidden">
           <div className="flex items-center gap-3 px-3 py-3">
             <div className="w-12 h-12 rounded-full bg-[#0D1117] flex items-center justify-center flex-shrink-0 border border-white/10">
               <span className="text-[13px] font-black bg-gradient-to-br from-violet-400 to-pink-500 bg-clip-text text-transparent">dp</span>
@@ -51,8 +51,8 @@ export function FundStats({ className }: FundStatsProps) {
             <button
               onClick={() => router.push('/buy')}
               className={cn(
-                'bg-[#3A3A3C] text-white text-base font-semibold rounded-2xl px-5 py-2',
-                'hover:bg-white/20 active:scale-95 transition-all cursor-pointer min-h-[44px]',
+                'inner-dark-buy-btn !text-white text-base font-semibold rounded-2xl px-5 py-2',
+                'hover:opacity-80 active:scale-95 transition-all cursor-pointer min-h-[44px]',
               )}
             >
               Buy

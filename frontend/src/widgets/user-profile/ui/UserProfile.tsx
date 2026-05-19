@@ -19,8 +19,8 @@ export function UserProfile({ className }: UserProfileProps) {
     <div className={cn('flex items-center justify-between py-3 px-1 animate-fade-up', className)}>
       <div className="flex items-center gap-3">
         <Avatar username={displayName} src={user?.photoUrl} size={52} />
-        <div className="flex flex-col">
-          <span className="text-white font-semibold text-base">
+        <div className="flex flex-col font-mono">
+          <span className="text-white text-base">
             {displayName}
           </span>
           <span className="text-[var(--text-secondary)] text-sm">
@@ -29,7 +29,7 @@ export function UserProfile({ className }: UserProfileProps) {
         </div>
       </div>
 
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center font-mono">
         <div className="border border-white/20 rounded-2xl px-5 py-3 min-w-[100px] text-center">
           <span className="text-white font-bold text-lg whitespace-nowrap">
             {points !== null ? formatNumber(points) : '—'}

@@ -30,8 +30,8 @@ export function TabBar<T extends string = string>({
             className={cn(
               'whitespace-nowrap py-2 px-4 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer min-h-[36px]',
               activeTab === tab.id
-                ? 'bg-white text-bg shadow-sm'
-                : 'bg-input text-text-secondary hover:text-white',
+                ? 'bg-text !text-bg shadow-sm'
+                : 'bg-input text-text-secondary hover:text-text',
             )}
           >
             {tab.label}

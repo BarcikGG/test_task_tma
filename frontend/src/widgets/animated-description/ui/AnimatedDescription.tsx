@@ -10,7 +10,7 @@ interface AnimatedDescriptionProps {
   className?: string
 }
 
-const textClassName = 'font-mono text-white/80 text-sm leading-relaxed'
+const textClassName = 'font-mono text-text-secondary text-sm leading-relaxed'
 
 export function AnimatedDescription({
   expanded,
