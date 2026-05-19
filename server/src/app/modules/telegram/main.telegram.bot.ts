@@ -1,11 +1,12 @@
 import { Bot, InlineKeyboard, webhookCallback, type Context } from 'grammy';
 import { BOT_COMMANDS } from './bot.commands';
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { UsersService } from '../user/users.service';
 import { Request, Response } from 'express';
 
 @Injectable()
 export class TelegramBot implements OnModuleInit {
+  private readonly logger = new Logger(TelegramBot.name);
   private bot: Bot;
   private handleUpdateFn: (req: Request, res: Response) => Promise<void>;
 
@@ -25,18 +26,31 @@ export class TelegramBot implements OnModuleInit {
   }
 
   async onModuleInit() {
+    let customFetch: typeof fetch | undefined;
+
     if (this.proxyUrl) {
-      const { setGlobalDispatcher, ProxyAgent } = await import('undici');
-      setGlobalDispatcher(new ProxyAgent(this.proxyUrl));
+      const { HttpsProxyAgent } = await import('https-proxy-agent');
+      const nodeFetch = (await import('node-fetch')).default;
+      const agent = new HttpsProxyAgent(this.proxyUrl);
+      customFetch = (url: string | URL | Request, opts?: RequestInit) =>
+        nodeFetch(url as string, { ...(opts as any), agent }) as unknown as Promise<Response>;
     }
 
-    this.bot = new Bot(this.token);
+    this.bot = new Bot(this.token, {
+      client: customFetch ? { fetch: customFetch } : {},
+    });
+
     this.userHandler();
     this.handleUpdateFn = webhookCallback(this.bot, 'express');
 
     if (this.webhookDomain) {
-      const url = `${this.webhookDomain}/api/telegram/webhook`;
-      await this.bot.api.setWebhook(url);
+      try {
+        const url = `${this.webhookDomain}/api/telegram/webhook`;
+        await this.bot.api.setWebhook(url);
+        this.logger.log(`Webhook set: ${url}`);
+      } catch (err) {
+        this.logger.error('Failed to set webhook, bot will not receive updates', err);
+      }
     } else {
       this.bot.start();
     }
