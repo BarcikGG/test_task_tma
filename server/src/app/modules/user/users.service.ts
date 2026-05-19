@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 import { InjectModel } from '@nestjs/sequelize';
-import { Op } from 'sequelize';
 
 @Injectable()
 export class UsersService {
@@ -26,13 +25,8 @@ export class UsersService {
     return await this.repository.findAll();
   }
 
-  async findByTgId(tgId: string): Promise<(User & { rank: number }) | null> {
-    const user = await this.repository.findOne({ where: { tgId } });
-    if (!user) return null;
-    const above = await this.repository.count({
-      where: { points: { [Op.gt]: user.points } },
-    });
-    return Object.assign(user, { rank: above + 1 });
+  async findByTgId(tgId: string): Promise<User | null> {
+    return this.repository.findOne({ where: { tgId } });
   }
 
   async count(): Promise<number> {

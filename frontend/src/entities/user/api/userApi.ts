@@ -9,7 +9,6 @@ export const BackendUserSchema = z.object({
   photoUrl: z.string().nullable(),
   points: z.number(),
   isActive: z.boolean(),
-  rank: z.number().optional(),
 })
 
 export type BackendUser = z.infer<typeof BackendUserSchema>

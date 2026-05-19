@@ -22,14 +22,20 @@ html.dark {
 html.light {
   --bg: #F2F2F7;
   --card: #FFFFFF;
+  --nav: #15202B;
   --input: #E5E5EA;
   --blue: #1D9BF0;
   --blue-hover: #1A8CD8;
-  --text: #000000;
+  --text: #1C1C1E;
   --text-secondary: #6C6C70;
   --border: rgba(0, 0, 0, 0.08);
   --shadow: rgba(0, 0, 0, 0.12);
   color-scheme: light;
+}
+
+/* text-white → тёмный текст в светлой теме (кроме элементов с !text-white) */
+html.light .text-white {
+  color: var(--text);
 }
 
 /* ── Base ─────────────────────────────────────── */

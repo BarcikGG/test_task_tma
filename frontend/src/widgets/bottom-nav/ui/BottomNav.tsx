@@ -51,7 +51,7 @@ export function BottomNav({ className }: BottomNavProps) {
             className={cn(
               'flex items-center justify-center w-12 h-12 rounded-xl transition-all',
               'hover:bg-white/5 active:scale-95',
-              isActive ? 'text-white' : 'text-text-secondary',
+              isActive ? '!text-white' : 'text-text-secondary',
             )}
             aria-label={item.label}
           >

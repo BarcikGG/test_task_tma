@@ -21,11 +21,7 @@ export class FundService {
   ) { }
 
   async getFundStats(): Promise<FundStatsResponse> {
-    const [
-      tonAmount,
-      membersCount,
-      purchasedCount,
-    ] = await Promise.all([
+    const [tonAmount, membersCount, purchasedCount] = await Promise.all([
       this.transactionHistoryService.sum('amount', { where: { currency: CurrencyList.TON } }),
       this.userService.count(),
       this.transactionHistoryService.count({ where: { currency: { [Op.in]: [CurrencyList.TON] } } }),

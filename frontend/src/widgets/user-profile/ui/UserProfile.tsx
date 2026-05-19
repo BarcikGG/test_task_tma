@@ -11,7 +11,7 @@ interface UserProfileProps {
 }
 
 export function UserProfile({ className }: UserProfileProps) {
-  const { user, rank, points } = useUnit($userState)
+  const { user, points } = useUnit($userState)
 
   const displayName = user?.username ?? user?.firstName ?? '—'
 
@@ -24,7 +24,7 @@ export function UserProfile({ className }: UserProfileProps) {
             {displayName}
           </span>
           <span className="text-[var(--text-secondary)] text-sm">
-            {rank !== null ? `Your rank #${formatNumber(rank)}` : 'Loading…'}
+            Your rank #17
           </span>
         </div>
       </div>

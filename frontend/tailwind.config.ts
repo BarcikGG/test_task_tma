@@ -14,17 +14,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: '#2F2F33',
-        card: '#253341',
-        nav: '#15202B',
-        input: '#3A3A3C',
+        bg: 'var(--bg)',
+        card: 'var(--card)',
+        nav: 'var(--nav)',
+        input: 'var(--input)',
         blue: {
-          DEFAULT: '#1D9BF0',
-          hover: '#1A8CD8',
+          DEFAULT: 'var(--blue)',
+          hover: 'var(--blue-hover)',
         },
         text: {
-          DEFAULT: '#F5F8FA',
-          secondary: '#AAB8C2',
+          DEFAULT: 'var(--text)',
+          secondary: 'var(--text-secondary)',
         },
       },
       fontFamily: {
