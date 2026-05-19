@@ -19,7 +19,7 @@ export function HomePage() {
   const isExpanded = useUnit($isExpanded)
 
   return (
-    <div className="flex flex-col h-dvh bg-bg overflow-x-hidden">
+    <div className="flex flex-col bg-bg overflow-x-hidden" style={{ height: '100dvh', minHeight: '-webkit-fill-available' }}>
       <div className="flex-1 overflow-y-auto">
         <div className="px-6 pt-4 pb-2 flex flex-col gap-4 stagger-children">
           <UserProfile />
@@ -34,7 +34,7 @@ export function HomePage() {
               variant="ghost"
               size="full"
               onClick={() => readMoreToggled()}
-              className="bg-[var(--input)] text-text hover:opacity-80"
+              className="bg-[var(--input)] hover:opacity-80"
             >
               {isExpanded ? 'Show less' : 'Read More'}
             </Button>

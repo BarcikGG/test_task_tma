@@ -50,7 +50,7 @@ export function Leaderboard({ className }: LeaderboardProps) {
           fetchNextPage()
         }
       },
-      { rootMargin: '300px' },
+      { rootMargin: '100px' },
     )
 
     observer.observe(sentinel)

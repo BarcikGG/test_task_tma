@@ -25,7 +25,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             // variants
             'bg-blue !text-white rounded-[16px]': variant === 'primary',
             'bg-card text-white rounded-[16px] border border-white/10': variant === 'secondary',
-            'bg-transparent text-white/70 hover:text-white rounded-[16px]': variant === 'ghost',
+            'bg-transparent text-text-secondary hover:text-text rounded-[16px]': variant === 'ghost',
             'bg-input text-white rounded-[16px]': variant === 'pill',
           },
           {

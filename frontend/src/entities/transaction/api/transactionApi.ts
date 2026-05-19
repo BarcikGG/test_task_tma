@@ -2,7 +2,7 @@ import { apiClient } from '@/shared/api/client'
 import { TransactionListSchema } from '../model/schema'
 import type { Transaction } from '../model/types'
 
-export const PAGE_SIZE = 20
+export const PAGE_SIZE = 50
 
 export interface TransactionPage {
   items: Transaction[]
