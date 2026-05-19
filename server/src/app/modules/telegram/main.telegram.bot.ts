@@ -1,13 +1,14 @@
 import { Bot, InlineKeyboard, type Context } from 'grammy';
 import { BOT_COMMANDS } from './bot.commands';
 import { Injectable } from '@nestjs/common';
+import { UsersService } from '../user/users.service';
 
 @Injectable()
 export class TelegramBot {
   private readonly bot: Bot;
   private readonly appUrl: string;
 
-  constructor() {
+  constructor(private readonly usersService: UsersService) {
     if (!process.env.TELEGRAM_BOT_TOKEN
       || !process.env.APP_URL
     ) {
@@ -29,7 +30,7 @@ export class TelegramBot {
   }
 
   /*
-  --- USER --- 
+  --- USER ---
   */
 
   private userHandler(): void {
@@ -43,12 +44,20 @@ export class TelegramBot {
       return;
     }
 
-    const message = `Hello!`
+    await this.usersService.findOrCreate({
+      tgId: String(context.from.id),
+      username: context.from.username ?? null,
+      firstName: context.from.first_name ?? null,
+      lastName: context.from.last_name ?? null,
+      langCode: context.from.language_code ?? null,
+      invitedBy: null,
+      photoUrl: null,
+    });
 
     const keyboard = new InlineKeyboard()
       .webApp('Open the App', this.appUrl);
 
-    await context.reply(message, {
+    await context.reply('Hello!', {
       reply_markup: keyboard,
       parse_mode: 'HTML'
     });
