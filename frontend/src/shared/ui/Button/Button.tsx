@@ -23,7 +23,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           'active:scale-95 hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100',
           {
             // variants
-            'bg-blue text-white rounded-[16px]': variant === 'primary',
+            'bg-blue !text-white rounded-[16px]': variant === 'primary',
             'bg-card text-white rounded-[16px] border border-white/10': variant === 'secondary',
             'bg-transparent text-white/70 hover:text-white rounded-[16px]': variant === 'ghost',
             'bg-input text-white rounded-[16px]': variant === 'pill',

@@ -30,7 +30,7 @@ export function UserProfile({ className }: UserProfileProps) {
       </div>
 
       <div className="flex flex-col items-center font-mono">
-        <div className="border border-white/20 rounded-2xl px-5 py-3 min-w-[100px] text-center">
+        <div className="border border-[var(--border)] rounded-2xl px-5 py-3 min-w-[100px] text-center">
           <span className="text-white font-bold text-lg whitespace-nowrap">
             {points !== null ? formatNumber(points) : '—'}
           </span>
