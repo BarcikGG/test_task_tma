@@ -1,32 +1,37 @@
 import { Bot, InlineKeyboard, type Context } from 'grammy';
 import { BOT_COMMANDS } from './bot.commands';
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { UsersService } from '../user/users.service';
 
 @Injectable()
-export class TelegramBot {
-  private readonly bot: Bot;
+export class TelegramBot implements OnModuleInit {
+  private bot: Bot;
   private readonly appUrl: string;
+  private readonly token: string;
+  private readonly proxyUrl: string | undefined;
 
   constructor(private readonly usersService: UsersService) {
-    if (!process.env.TELEGRAM_BOT_TOKEN
-      || !process.env.APP_URL
-    ) {
+    if (!process.env.TELEGRAM_BOT_TOKEN || !process.env.APP_URL) {
       throw new Error('Main telegram bot env is empty. Please set in ENV');
     }
+    this.token = process.env.TELEGRAM_BOT_TOKEN;
     this.appUrl = process.env.APP_URL;
-    this.bot = new Bot(process.env.TELEGRAM_BOT_TOKEN);
+    this.proxyUrl = process.env.TELEGRAM_HTTP_PROXY?.trim();
+  }
 
-    this.initializeBot();
+  async onModuleInit() {
+    if (this.proxyUrl) {
+      const { setGlobalDispatcher, ProxyAgent } = await import('undici');
+      setGlobalDispatcher(new ProxyAgent(this.proxyUrl));
+    }
+
+    this.bot = new Bot(this.token);
+    this.userHandler();
+    this.bot.start();
   }
 
   getBotApi() {
     return this.bot.api;
-  }
-
-  private initializeBot(): void {
-    this.userHandler();
-    this.bot.start();
   }
 
   /*
@@ -59,7 +64,7 @@ export class TelegramBot {
 
     await context.reply('Hello!', {
       reply_markup: keyboard,
-      parse_mode: 'HTML'
+      parse_mode: 'HTML',
     });
   }
 }
