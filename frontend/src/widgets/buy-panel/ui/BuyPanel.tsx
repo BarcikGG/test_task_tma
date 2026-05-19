@@ -95,14 +95,13 @@ export function BuyPanel({ className }: BuyPanelProps) {
 
   return (
     <div className={cn('flex flex-col gap-2 animate-fade-up', className)}>
-      <div className="bg-[#141928] rounded-2xl flex items-center justify-between px-8 py-5">
+      <div className="inner-dark-panel rounded-2xl flex items-center justify-between px-8 py-5">
         <button
           type="button"
           onClick={handleDecrement}
           className={cn(
-            'w-8 h-8 rounded-full bg-text-secondary inline-flex items-center justify-center p-0',
-            'text-[#141928] cursor-pointer',
-            'hover:bg-text-secondary/80 active:scale-95 transition-all',
+            'buy-stepper-btn w-8 h-8 rounded-full inline-flex items-center justify-center p-0',
+            'cursor-pointer active:scale-95 transition-all',
           )}
           aria-label="Decrease amount"
         >
@@ -112,7 +111,7 @@ export function BuyPanel({ className }: BuyPanelProps) {
         </button>
 
         <div className="text-center">
-          <span className="!text-white text-4xl font-bold tracking-tight">
+          <span className="buy-panel-amount !text-white text-4xl font-bold tracking-tight">
             {formatEuropean(displayAmount)}
           </span>
         </div>
@@ -121,9 +120,8 @@ export function BuyPanel({ className }: BuyPanelProps) {
           type="button"
           onClick={handleIncrement}
           className={cn(
-            'w-8 h-8 rounded-full bg-text-secondary inline-flex items-center justify-center p-0',
-            'text-[#141928] cursor-pointer',
-            'hover:bg-text-secondary/80 active:scale-95 transition-all',
+            'buy-stepper-btn w-8 h-8 rounded-full inline-flex items-center justify-center p-0',
+            'cursor-pointer active:scale-95 transition-all',
           )}
           aria-label="Increase amount"
         >
@@ -155,7 +153,7 @@ export function BuyPanel({ className }: BuyPanelProps) {
             value={currency}
             onChange={handleCurrencyChange}
             className={cn(
-              'h-14 bg-[#141928] border border-white/[0.08] rounded-2xl px-4 pr-8',
+              'h-14 inner-dark-panel border border-white/[0.08] rounded-2xl px-4 pr-8',
               '!text-white text-sm font-medium appearance-none cursor-pointer',
               'focus:outline-none focus:border-blue transition-colors',
               'min-w-[100px] font-mono',
@@ -178,7 +176,7 @@ export function BuyPanel({ className }: BuyPanelProps) {
           onChange={handleAmountChange}
           onBlur={handleAmountBlur}
           className={cn(
-            'flex-1 h-14 bg-[#141928] border border-white/[0.08] rounded-2xl px-4',
+            'flex-1 h-14 inner-dark-panel border border-white/[0.08] rounded-2xl px-4',
             '!text-white text-md font-medium text-left',
             'focus:outline-none focus:border-blue transition-colors font-mono',
           )}

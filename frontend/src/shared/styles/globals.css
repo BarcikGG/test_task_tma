@@ -46,6 +46,14 @@ html.light .inner-dark-card { background: #E8EDF3; }
 .inner-dark-buy-btn { background: #3A3A3C; }
 html.light .inner-dark-buy-btn { background: #8E8E93; }
 
+.inner-dark-panel { background: #141928; }
+html.light .inner-dark-panel { background: #E8EDF3; }
+
+.buy-stepper-btn { background: var(--text-secondary); color: #141928; }
+html.light .buy-stepper-btn { background: var(--blue); color: #fff; }
+
+html.light .buy-panel-amount { color: var(--text); }
+
 /* ── Base ─────────────────────────────────────── */
 * {
   box-sizing: border-box;
