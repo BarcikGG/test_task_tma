@@ -6,6 +6,7 @@ import { Avatar } from '@/shared/ui/Avatar'
 import { TabBar } from '@/shared/ui/TabBar'
 import { cn } from '@/shared/lib/cn'
 import { formatTON } from '@/shared/lib/format'
+import { useInView } from '@/shared/lib/useInView'
 import { $activeTab, tabChanged } from '@/features/tab-switch'
 import { useTransactions } from '@/entities/transaction'
 import { TransactionList } from './TransactionList'
@@ -28,6 +29,7 @@ export function Leaderboard({ className }: LeaderboardProps) {
   const activeTab = useUnit($activeTab)
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useTransactions()
   const sentinelRef = useRef<HTMLDivElement>(null)
+  const { ref: revealRef, inView } = useInView<HTMLDivElement>({ rootMargin: '0px 0px -5% 0px' })
 
   const transactions = data?.pages.flatMap((p) => p.items) ?? []
 
@@ -58,7 +60,7 @@ export function Leaderboard({ className }: LeaderboardProps) {
   }, [hasNextPage, isFetchingNextPage, fetchNextPage])
 
   return (
-    <div className={cn('flex flex-col', className)}>
+    <div ref={revealRef} className={cn('flex flex-col', className)}>
       <div className="pb-3 flex-shrink-0">
         <TabBar
           tabs={TABS}
@@ -68,9 +70,9 @@ export function Leaderboard({ className }: LeaderboardProps) {
       </div>
 
       <div className="border border-[rgba(116,116,128,0.15)] rounded-[14px] overflow-hidden">
-        <div key={activeTab} className="animate-fade-in">
-          {activeTab === 'holders' && <HoldersList items={uniqueByUser(transactions)} />}
-          {activeTab === 'transfers' && <TransactionList items={transactions} />}
+        <div key={activeTab} className={cn('lazy-fade-in', inView && 'in-view')}>
+          {activeTab === 'holders' && <HoldersList items={uniqueByUser(transactions)} inView={inView} />}
+          {activeTab === 'transfers' && <TransactionList items={transactions} inView={inView} />}
           {activeTab === 'top' && <TopUsers items={uniqueByUser(transactions)} />}
         </div>
       </div>
@@ -84,6 +86,7 @@ export function Leaderboard({ className }: LeaderboardProps) {
 
 interface HoldersListProps {
   items: Transaction[]
+  inView: boolean
 }
 
 function SkeletonRows() {
@@ -103,9 +106,9 @@ function SkeletonRows() {
   )
 }
 
-function HoldersList({ items }: HoldersListProps) {
+function HoldersList({ items, inView }: HoldersListProps) {
   return (
-    <ul className="flex flex-col gap-1 stagger-children">
+    <ul className={cn('flex flex-col gap-1 lazy-stagger', inView && 'in-view')}>
       {items.map((item, index) => (
         <li
           key={item.id}

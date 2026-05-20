@@ -8,6 +8,7 @@ import type { Transaction } from '@/entities/transaction'
 interface TransactionListProps {
   items: Transaction[]
   className?: string
+  inView?: boolean
 }
 
 function timeAgo(timestamp: string): string {
@@ -20,9 +21,9 @@ function timeAgo(timestamp: string): string {
   return `${Math.floor(hours / 24)}d ago`
 }
 
-export function TransactionList({ items, className }: TransactionListProps) {
+export function TransactionList({ items, className, inView = true }: TransactionListProps) {
   return (
-    <ul className={cn('flex flex-col gap-1 stagger-children', className)}>
+    <ul className={cn('flex flex-col gap-1 lazy-stagger', inView && 'in-view', className)}>
       {items.map((item, index) => (
         <li
           key={item.id}

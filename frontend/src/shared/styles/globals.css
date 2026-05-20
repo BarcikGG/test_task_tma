@@ -133,6 +133,27 @@ body {
 .stagger-children > *:nth-child(9)  { animation-delay: 0.45s; }
 .stagger-children > *:nth-child(10) { animation-delay: 0.50s; }
 
+/* ── Lazy variants (triggered by IntersectionObserver) ── */
+.lazy-stagger > * { opacity: 0; }
+.lazy-stagger.in-view > * {
+  animation: fadeUp 0.4s ease both;
+}
+.lazy-stagger.in-view > *:nth-child(1)  { animation-delay: 0.05s; }
+.lazy-stagger.in-view > *:nth-child(2)  { animation-delay: 0.10s; }
+.lazy-stagger.in-view > *:nth-child(3)  { animation-delay: 0.15s; }
+.lazy-stagger.in-view > *:nth-child(4)  { animation-delay: 0.20s; }
+.lazy-stagger.in-view > *:nth-child(5)  { animation-delay: 0.25s; }
+.lazy-stagger.in-view > *:nth-child(6)  { animation-delay: 0.30s; }
+.lazy-stagger.in-view > *:nth-child(7)  { animation-delay: 0.35s; }
+.lazy-stagger.in-view > *:nth-child(8)  { animation-delay: 0.40s; }
+.lazy-stagger.in-view > *:nth-child(9)  { animation-delay: 0.45s; }
+.lazy-stagger.in-view > *:nth-child(10) { animation-delay: 0.50s; }
+
+.lazy-fade-in { opacity: 0; }
+.lazy-fade-in.in-view {
+  animation: fadeIn 0.3s ease both;
+}
+
 /* ── Hidden scrollbar (global) ────────────────── */
 * {
   scrollbar-width: none;
